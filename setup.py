@@ -74,6 +74,8 @@ setuptools_info = dict(
                       'mock>=2.0.0',
                       # for pep8 linter
                       'pycodestyle==2.3.1',
+                      # for run-mypy
+                      'mypy',
                       ],
 )
 
