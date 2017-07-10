@@ -1,6 +1,5 @@
 import json
 import os
-import sys
 
 from random import choice
 
@@ -12,9 +11,6 @@ except ImportError:
                       Please: pip install chatterbot""")
 
 BOTS_DIR = os.path.dirname(os.path.abspath(__file__))
-os.chdir(os.path.dirname(BOTS_DIR))
-sys.path.insert(0, os.path.dirname(BOTS_DIR))
-
 JOKES_PATH = os.path.join(BOTS_DIR, 'assets/var/jokes.json')
 DATABASE_PATH = os.path.join(BOTS_DIR, 'assets/var/database.db')
 DIRECTORY_PATH = os.path.join(BOTS_DIR, 'assets')

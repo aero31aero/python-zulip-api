@@ -14,12 +14,6 @@ if False:
 from typing import Any, Optional, List, Dict
 from types import ModuleType
 
-our_dir = os.path.dirname(os.path.abspath(__file__))
-
-# For dev setups, we can find the API in the repo itself.
-if os.path.exists(os.path.join(our_dir, '../zulip')):
-    sys.path.insert(0, os.path.join(our_dir, '../'))
-
 from zulip import Client
 
 def exit_gracefully(signum, frame):
@@ -107,7 +101,8 @@ class ExternalBotHandler(object):
         section = section or bot_name
         config = configparser.ConfigParser()
         try:
-            config.readfp(open(conf_file_path))  # type: ignore
+            with open(config_file_path) as conf:
+                config.readfp(conf)  # type: ignore
         except IOError:
             if optional:
                 return dict()
