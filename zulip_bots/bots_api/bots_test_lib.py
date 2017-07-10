@@ -4,7 +4,6 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import os
-import sys
 
 import json
 import logging
@@ -14,18 +13,17 @@ import unittest
 
 from mock import MagicMock, patch
 
-from run import get_lib_module
-from bot_lib import StateHandler
+from bots_api.bot_lib import StateHandler
 from bots_api import bot_lib
 from six.moves import zip
 
 from contextlib import contextmanager
+from importlib import import_module
 from unittest import TestCase
 
 from typing import List, Dict, Any, Optional, Callable
 from types import ModuleType
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
 
 class BotTestCase(TestCase):
     bot_name = ''  # type: str
@@ -36,9 +34,7 @@ class BotTestCase(TestCase):
         # handler class. Eventually, we want bot's handler classes to
         # inherit from a common prototype specifying the handle_message
         # function.
-        bot_module_path = os.path.normpath(os.path.join(
-            current_dir, '..', 'bots', self.bot_name, self.bot_name + '.py'))
-        lib_module = get_lib_module(bot_module_path)
+        lib_module = import_module('bots.{bot}.{bot}'.format(bot=self.bot_name))
         return lib_module.handler_class()
 
     def setUp(self):

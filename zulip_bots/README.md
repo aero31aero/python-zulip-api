@@ -24,13 +24,17 @@ to messages in any of the following settings:
   account specific authentication, for example: a gmail bot that lets
   one send emails directly through Zulip.
 
+## Installing
+
+To install the bots and bots API, run:
+
+    python setup.py install
+
 ## Running bots
 
-Here is an example of running the "follow-up" bot from
-inside a Zulip repo (and in your remote instance):
+Here is an example of running the "follow-up" bot:
 
-    cd ~/zulip/api
-    bots_api/run.py bots/followup/followup.py --config-file ~/.zuliprc-prod
+    zulip-run-bot followup --config-file ~/.zuliprc-prod
 
 Once the bot code starts running, you will see a
 message explaining how to use the bot, as well as

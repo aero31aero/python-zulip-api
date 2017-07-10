@@ -2,42 +2,19 @@
 from __future__ import print_function
 from __future__ import absolute_import
 
-import importlib
 import logging
 import optparse
-import os
 import sys
 from types import ModuleType
+from importlib import import_module
 
-our_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, our_dir)
+from bots_api.bot_lib import run_message_handler_for_bot
 
-from bot_lib import run_message_handler_for_bot
 
-def validate_path(bots_fn):
-    # type: (str) -> None
-    bots_fn = os.path.realpath(bots_fn)
-    if not os.path.dirname(bots_fn).startswith(os.path.normpath(os.path.join(our_dir, "../bots"))):
-        print('Sorry, we will only import code from api/bots.')
-        sys.exit(1)
-
-    if not bots_fn.endswith('.py'):
-        print('Please use a .py extension for library files.')
-        sys.exit(1)
-
-def get_lib_module(bots_fn):
-    # type: (str) -> ModuleType
-    base_bots_fn = os.path.basename(os.path.splitext(bots_fn)[0])
-    sys.path.insert(1, os.path.dirname(bots_fn))
-    module_name = base_bots_fn
-    module = importlib.import_module(module_name)
-    return module
-
-def run():
-    # type: () -> None
+def parse_args():
     usage = '''
-        ./run.py <lib file>
-        Example: ./run.py lib/followup.py
+        zulip-run-bot <bot_name>
+        Example: zulip-run-bot followup
         (This program loads bot-related code from the
         library code and then runs a message loop,
         feeding messages to the library code to handle.)
@@ -51,22 +28,27 @@ def run():
     parser.add_option('--quiet', '-q',
                       action='store_true',
                       help='Turn off logging output.')
+
     parser.add_option('--config-file',
                       action='store',
                       help='(alternate config file to ~/.zuliprc)')
+
     parser.add_option('--force',
                       action='store_true',
                       help='Try running the bot even if dependencies install fails.')
     (options, args) = parser.parse_args()
+    if not args:
+        parser.error('You must specify the name of the bot!')
 
-    if len(args) == 0:
-        print('You must specify a library!')
-        sys.exit(1)
-    bots_fn = args[0]
+    return (options, args)
 
-    validate_path(bots_fn)
 
-    lib_module = get_lib_module(bots_fn)
+def main():
+    # type: () -> None
+    (options, args) = parse_args()
+    bot_name = args[0]
+
+    lib_module = import_module('bots.{bot}.{bot}'.format(bot=bot_name))
     if not options.quiet:
         logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
@@ -77,4 +59,4 @@ def run():
     )
 
 if __name__ == '__main__':
-    run()
+    main()

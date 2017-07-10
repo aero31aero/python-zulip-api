@@ -23,6 +23,7 @@ package_info = dict(
     entry_points={
         'console_scripts': [
             'zulip-bot-server=server.bot_server:main',
+            'zulip-run-bot=bots_api.run:main',
         ],
     },
     test_suite='tests',
