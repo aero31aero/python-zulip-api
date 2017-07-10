@@ -5,7 +5,7 @@ from __future__ import print_function
 
 from six.moves import zip
 
-from bots_test_lib import BotTestCase
+from bots_api.bots_test_lib import BotTestCase
 
 class TestHelpBot(BotTestCase):
     bot_name = "help"

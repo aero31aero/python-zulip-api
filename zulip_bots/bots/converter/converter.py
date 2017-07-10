@@ -5,11 +5,10 @@ from __future__ import division
 
 import copy
 import importlib
-import sys
 from math import log10, floor
 
-import utils
 import re
+from bots.converter import utils
 
 def is_float(value):
     try:

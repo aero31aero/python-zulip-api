@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import mock
-from bots_test_lib import BotTestCase
+from bots_api.bots_test_lib import BotTestCase
 
 class TestXkcdBot(BotTestCase):
     bot_name = "xkcd"

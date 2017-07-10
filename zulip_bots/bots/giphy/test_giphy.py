@@ -5,7 +5,7 @@ from __future__ import print_function
 
 import json
 
-from bots_test_lib import BotTestCase
+from bots_api.bots_test_lib import BotTestCase
 
 class TestGiphyBot(BotTestCase):
     bot_name = "giphy"

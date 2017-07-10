@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-from bots_test_lib import BotTestCase
+from bots_api.bots_test_lib import BotTestCase
 
 class TestFollowUpBot(BotTestCase):
     bot_name = "followup"
