@@ -7,7 +7,6 @@ import logging
 import optparse
 import os
 import sys
-import provision
 from types import ModuleType
 
 our_dir = os.path.dirname(os.path.abspath(__file__))
@@ -55,9 +54,6 @@ def run():
     parser.add_option('--config-file',
                       action='store',
                       help='(alternate config file to ~/.zuliprc)')
-    parser.add_option('--provision',
-                      action='store_true',
-                      help='Install dependencies for the bot')
     parser.add_option('--force',
                       action='store_true',
                       help='Try running the bot even if dependencies install fails.')
@@ -69,9 +65,7 @@ def run():
     bots_fn = args[0]
 
     validate_path(bots_fn)
-    if options.provision:
-        print("Provisioning")
-        provision.provision_bot(os.path.dirname(bots_fn), options.force)
+
     lib_module = get_lib_module(bots_fn)
     if not options.quiet:
         logging.basicConfig(stream=sys.stdout, level=logging.INFO)
