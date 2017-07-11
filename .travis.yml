@@ -2,7 +2,8 @@ language: python
 python:
   - "2.7"
 install:
-  - pip install zulip_bots
+  - pip install ./zulip_bots
+  - pip install ./zulip_api
 script:
   - tools/lint
   - python -m unittest discover -v zulip_bots
