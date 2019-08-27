@@ -163,6 +163,7 @@ class ExternalBotHandler(object):
         return resp
 
     def send_reply(self, message: Dict[str, Any], response: str, widget_content: Optional[str]=None) -> Dict[str, Any]:
+        print("MESSAGE", message)
         if message['type'] == 'private':
             return self.send_message(dict(
                 type='private',
